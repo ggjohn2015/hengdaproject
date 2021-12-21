@@ -1,0 +1,42 @@
+{% extends "base_2.html" %}
+{% load staticfiles %}
+
+{% block title %}
+企业概况
+{% endblock %}
+
+{% block content %}
+<!--广告横图-->
+<div class="container-fluid">
+    <div class="row">
+        <img class="img-responsive modle-img" src="{% static 'img/about.jpg' %}">
+    </div>
+</div>
+<!-- 侧边栏-->
+<div class="container">
+    <div class="row row-3">
+        <!--侧边导航栏-->
+        <div class="col-md-3">
+            <div class="model-title">
+                公司简介
+            </div>
+            <div class="model-list">
+                <ul class="list-group">
+                    <li class="list-group-item" id="survey">
+                        <a href="{% url 'aboutApp:survey' %}">企业概况</a>
+                    </li>
+                    <li class="list-group-item" id="honor">
+                        <a href="{% url 'aboutApp:honor' %}">荣誉资质</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!--说明性文字，占9格-->
+        <div class="col-md-9">
+                {% block rightcontent %}
+                {% endblock %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

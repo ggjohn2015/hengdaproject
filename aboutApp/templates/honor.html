@@ -1,0 +1,21 @@
+{% extends "about_base.html" %}
+{% load staticfiles %}   <!--这一句在模板中有，这里还是需要再次load-->
+
+{% block rightcontent %}
+<div class="model-details-title">
+    荣誉资质
+</div>
+<div class="row">
+    {% for award in awards %}
+    <div class="col-sm-6 col-md-4">
+        <div class="thumbnail">
+            <img src="{{award.photo.url}}">
+            <div class="caption">
+                <p>{{award.description}}</p>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}

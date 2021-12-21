@@ -1,0 +1,91 @@
+{% extends 'base_2.html' %}
+
+{% load staticfiles %}
+
+{% block title %}
+{#    {{ newName }}#}
+    服务支持
+{% endblock %}
+
+{% block content %}
+    <link href="{% static 'css/news.css' %}" rel="stylesheet">
+    <!--广告横幅-->
+    <div class="container-fluid">
+        <div class="row">
+            <img class="img-responsive model-img" src="{% static 'img/service.jpg' %}">
+        </div>
+    </div>
+    <!--主题内容-->
+    <div class="container">
+        <div class="row row-3">
+            <!--侧边导航栏-->
+            <div class="col-md-3">
+                <div class="model-title">
+                    服务支持
+                </div>
+                <div class="model-list">
+                    <ul class="list-group">
+                        <li class="list-group-item" id="company">
+                            <a href="{% url 'serviceApp:download'  %}">资料下载</a>  <!--和newsApp不一样，此处不带参数-->
+                        </li>
+                        <li class="list-group-item" id="industry">
+                            <a href="{% url 'newsApp:news' 'industry' %}">人脸识别开放平台</a>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+
+
+            <!--说明文字和图片-->
+            <div class="col-md-9">
+                <div class="model-details-title">  <!--此处没有加haystack全文搜索框-->
+                    资料下载
+
+                </div>
+                <div class="model-details">
+                    {% for doc in docList %}
+                        <div class="news-model">
+                            <img src="{% static 'img/newsicon.gif' %}">
+                            <a href="{% url 'serviceApp:getDoc' doc.id %}"><b>{{ doc.title }}</b></a>   <!--此处点击后的下载链接,带id参数-->
+                            <span>【{{ doc.publishDate|date:"Y-m-d" }}】</span>
+                            <!--无需和newsApp一样加新闻详情，就一个title解决问题-->
+                        </div>
+                    {% endfor %}
+                    <!--分页显示-->
+                    <!--加分页控件-->
+                {% if pageData %}
+                <div class="paging">
+                    <ul id="pages" class="pagination ">
+                        {% if pageData.first %}
+                        <li><a href="?page=1">1</a></li>
+                        {% endif %}
+                        {% if pageData.left %}
+                        {% if pageData.left_has_more %}
+                        <li><span>...</span></li>
+                        {% endif %}
+                        {% for i in pageData.left %}
+                        <li><a href="?page={{i}}">{{i}}</a></li>
+                        {% endfor %}
+                        {% endif %}
+                        <li class="active"><a href="?page={{pageData.page}}">{{pageData.page}}</a></li>
+                        {% if pageData.right %}
+                        {% for i in pageData.right %}
+                        <li><a href="?page={{i}}">{{i}}</a></li>
+                        {% endfor %}
+                        {% if pageData.right_has_more %}
+                        <li><span>...</span></li>
+                        {% endif %}
+                        {% endif %}
+                        {% if pageData.last %}
+                        <li><a href="?page={{pageData.total_pages}}">{{pageData.total_pages}}</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+                {% endif %}
+                <!--以上是分页控件-->
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
